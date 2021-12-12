@@ -44,9 +44,25 @@ const mostBlogs = blogs => {
   return authorWithMostBlogs
 }
 
+const moreLikes = blogs => {
+  if (blogs.length === 0) {
+    return {}
+  }
+
+  const authorWithMoreLikes = lodash.chain(blogs)
+    .countBy('author')
+    .map((obj, key) => ({ 'author': key, 'likes': lodash.sumBy(obj, 'likes') }))
+    .sortBy('likes')
+    .last()
+    .value()
+  console.log({ authorWithMoreLikes})
+  return authorWithMoreLikes
+}
+
 module.exports = {
   dummy,
   totalLikes,
   favouriteBlog,
-  mostBlogs
+  mostBlogs,
+  moreLikes
 }
